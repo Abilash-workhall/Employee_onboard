@@ -1,22 +1,29 @@
-import logo from './logo.svg';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import UserAuth from "./Components/UserAuthForm";
+import  OnboardingForm from "./Components/OnboardingForm";
+import DocumentUpload from "./Components/DocumentUploadForm";
 import './App.css';
-import { increment , decrement , setValue } from './store/exampleSlice';
-import { useSelector,useDispatch } from 'react-redux';
 
 function App() {
-  const dispatch = useDispatch();
-  const count = useSelector((state) => state.example.value);
-
-
-  
   return (
-    <div >
-   <h1 className="bg-red-400 text-lg ">Abi</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
-      <button onClick={() => dispatch(setValue(42))}>Set Value to 42</button>
-   <div>Value: {count}</div>;
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        <Routes>
+          {/* User Authentication Page */}
+          <Route path="/userauth" element={<UserAuth />} />
+
+          {/* Employee Onboarding Page */}
+          <Route path="/employee-onboard" element={<OnboardingForm />} />
+
+          {/* Document Upload Page */}
+          <Route path="/document-upload" element={<DocumentUpload />} />
+
+          {/* Redirect to UserAuth if no match is found */}
+          <Route path="*" element={<UserAuth />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

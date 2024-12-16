@@ -36,9 +36,7 @@ rot.post("/login",async(req,res)=>{
         if (!isMatch) {
           return res.status(401).send("Invalid credentials");
         }
-        const token = tkngtr(user);
-        console.log(user.role);
-        res.json({ token, role: user.role});
+        res.json({ Detials: user , role: user.role});
         console.log("Login Success");
       }catch (error) {
         console.error('Error during login:', error);
