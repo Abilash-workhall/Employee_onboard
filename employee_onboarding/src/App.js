@@ -1,17 +1,21 @@
-import logo from './logo.svg';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
 import './App.css';
-import { increment , decrement , setValue } from './store/exampleSlice';
-import { useSelector,useDispatch } from 'react-redux';
+import UserDashboard from "./pages/UserDashboard";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
+  console.log("page refreshed");
+  
   return (
-    <div >
-   <h1 className="bg-red-400 text-lg ">Abi</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
-      <button onClick={() => dispatch(setValue(42))}>Set Value to 42</button>
-   <div>Value: {count}</div>;
-    </div>
+   <BrowserRouter>
+   <Routes>
+    <Route path="/"  element={<UserDashboard/>}/>
+    <Route path="/login" element={<Login/>}/>
+    <Route path="/signup" element={<SignUp/>}/>
+   </Routes>
+   </BrowserRouter>
   );
 }
 
