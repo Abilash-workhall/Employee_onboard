@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const UserAuthForm = () => {
+  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
     umail: "",
@@ -37,6 +39,11 @@ const UserAuthForm = () => {
         });
         const { Detials, role } = response.data;
         localStorage.setItem("User Detial", Detials);
+        if(Detials.role==1){
+          navigate('/AdminDashboard');
+        }else{
+          navigate('/UserDashboard');
+        }
       }
     } catch (error) {
       console.error("API Error:", error);
