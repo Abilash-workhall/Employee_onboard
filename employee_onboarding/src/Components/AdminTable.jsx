@@ -20,7 +20,6 @@ export default function AdminTable({ AllUsers, loading, error, search }) {
     navigate(`/admindashboard/${id}`);
   };
 
-  // Filtered users based on search
   const filteredUsers = AllUsers.filter((user) => {
     return user.Fullname.toLowerCase().includes(search.toLowerCase());
   });
@@ -45,7 +44,6 @@ export default function AdminTable({ AllUsers, loading, error, search }) {
       {!loading && !error && (
         <div className="overflow-x-auto">
           {filteredUsers.length === 0 ? (
-            // Show this message if no users match the search query
             <p className="text-center text-gray-500 gap-2 flex justify-center items-center  ">
               {" "}
               <IoBanOutline /> No data found
@@ -59,13 +57,13 @@ export default function AdminTable({ AllUsers, loading, error, search }) {
                   <th className="py-3 px-6 text-left">Phone Number</th>
                   <th className="py-3 px-6 text-left">Department</th>
                   <th className="py-3 px-6 text-left">Designation</th>
-                  <th className="py-3 px-6 text-left">Actions</th>
-                  <th className="py-3 px-6 text-left">Onboard</th>
+               
+                  <th className="py-3 px-6 text-left">Onboard status</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredUsers.map((user) => (
-                  <tr key={user._id} className="hover:bg-gray-100">
+                  <tr onClick={()=>handleClick(user.SigininId)} key={user._id} className="hover:bg-gray-100">
                     <td className="py-3 px-6 flex items-center">
                       <div className="flex items-center gap-2">
                         <FaUserCircle />
@@ -76,7 +74,7 @@ export default function AdminTable({ AllUsers, loading, error, search }) {
                     <td className="py-3 px-6">{user.Phonenumber}</td>
                     <td className="py-3 px-6">{user.Department}</td>
                     <td className="py-3 px-6">{user.Designation}</td>
-                    <td className="py-3 px-6 text-center">
+                    {/* <td className="py-3 px-6 text-center">
                       <button
                         onClick={() => handleClick(user.SigininId)}
                         className="bg-[#181C14] flex items-center gap-2 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors duration-300"
@@ -84,18 +82,18 @@ export default function AdminTable({ AllUsers, loading, error, search }) {
                         <FaEye />
                         View
                       </button>
-                    </td>
+                    </td> */}
                     <td className="py-3 px-6">
                       {user.status_id === 5 ? (
                         <button
-                          className="inline-flex gap-1 items-center text-blue-500"
+                          className="inline-flex gap-2 text-sm border-2 py-1 px-2 rounded-lg hover:bg-blue-500 transition-colors hover:text-white border-blue-500 items-center text-blue-500"
                           onClick={() => Onboard_click(user.SigininId)}
                         >
                           <GrValidate />
                           Onboard
                         </button>
                       ) : user.status_id === 6 ? (
-                        <button className="inline-flex items-center text-gray-500">
+                        <button className="inline-flex items-center text-gray-400">
                           ALready Onboarded
                         </button>
                       ) : (

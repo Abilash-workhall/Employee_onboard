@@ -19,7 +19,7 @@ export default function OnboardNotify() {
         width={400}
      
       />
-           <h2 className='text-green-700'>You are now an Eligible Candidate for Onboarding process</h2>
+           <h2 className='text-green-500  text-lg  absolute z-10'>You are now an Eligible Candidate for Onboarding process</h2>
            
     </secttion>
   )

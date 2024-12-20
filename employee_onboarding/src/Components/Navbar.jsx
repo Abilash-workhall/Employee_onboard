@@ -1,7 +1,6 @@
 import React from 'react';
 import Logo from './Logo';
 import { Link } from 'react-router-dom';
-import { FaUserCircle } from "react-icons/fa";
 import Dropdown from './Dropdown';
 export default function Navbar() {
 

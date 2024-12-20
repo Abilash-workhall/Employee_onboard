@@ -74,7 +74,8 @@ export default function UserModal() {
     console.log("aaa");
     try {
       await axios.post("http://localhost:3010/users/n", noti);
-      console.log("Notification sent");
+      navigate("/admindashboard")
+      
     } catch (err) {
       console.error("Error sending notification:", err);
     }
