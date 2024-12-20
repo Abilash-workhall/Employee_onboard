@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -22,12 +21,25 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    status:{
+    status: {
+        type: String,
+        default: "Account created"
+    },
+    status_id:{
         type:Number,
         default:0
     },
-    Joiningdate:{
-        type:Date,
+    Joiningdate: {
+        type: Date,
+    },
+    SigininId: {
+        type: String
+    },
+    docs: {
+        resume: { type: String },
+        marksheet_10th: { type: String },
+        marksheet_12th: { type: String },
+        marksheet_clg: { type: String },
     }
 });
 

@@ -1,11 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Logo from "../components/Logo";
+import { setuserdata } from "../slices/UserSlice";
+import { email_label, invalid_cred, login_btn, login_text, no_account, password_label, signup_btn } from "../Text";
 
 const LoginPage = () => {
+
+  // localStorage.removeItem("User_Detial")
   const [formData, setFormData] = useState({
     umail: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [invalid, setInvalid] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,56 +34,42 @@ const LoginPage = () => {
         umail: formData.umail,
         upassword: formData.password,
       });
-      const { Detials, role } = response.data;
-      localStorage.setItem("User Detial", Detials);
-      alert("Logged in successfully");
+      const { Detials } = response.data;
+      setInvalid(false);
+
+      dispatch(
+        setuserdata({
+          username: Detials.uname,
+          is_loggedin: true,
+          role: Detials.role,
+        })
+      );
+
+      localStorage.setItem("User_Detial", JSON.stringify(Detials));
+      
+    setTimeout(() => {
+      if (Detials.role === 2) {
+        navigate("/admindashboard");
+      } else {
+        navigate("/userdashboard");
+      }
+    }, 2000);
     } catch (error) {
+      setInvalid(true);
       console.error("API Error:", error);
-      alert("An error occurred.");
     }
   };
 
   return (
     <section className="bg-white h-screen w-screen flex flex-col justify-center items-center">
+      <div className="p-8 rounded-lg mt-2 bg-[#181C14] w-full max-w-md">
+        <Logo />
+        <p className="mt-2 text-blue-400 text-sm"> {login_text} </p>
 
-
-      <div className="p-8 rounded-lg mt-2 bg-[#181C14]  w-full max-w-md">
-      <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="140"
-  height="24"
-  fill="none"
-  viewBox="0 0 140 24"
-  className="AuthLayout_Logo__cN2A9"
-  role="img"
-  aria-hidden="false"
->
-  <title>Workhall</title>
-  <path
-    fill="#FFFFFF"
-    fillRule="evenodd"
-    d="M44.56 6.033l.279.003c5.17.132 9.033 3.92 9.033 8.915v.065c0 5.039-4.118 8.984-9.376 8.984-5.222 0-9.312-3.918-9.312-8.918v-.066c0-5.038 4.12-8.983 9.377-8.983zM44.497 10c-2.736 0-4.722 2.082-4.722 4.951v.065c0 2.814 2.104 5.016 4.787 5.016 2.737 0 4.722-2.08 4.722-4.95v-.066c0-2.813-2.102-5.016-4.787-5.016zm17.31.553V6.36h-4.654v17.246h4.655V17.28c0-4.102 1.957-6.36 5.51-6.36h.096V6.028c-2.49-.069-4.187 1.142-5.29 3.774l-.316.75v.001zM80.93 6.36l-6.073 6.653V0h-4.654v23.607h4.654v-5.245l1.928-2.037.112.178 4.542 7.104h5.314l-6.826-10.512L86.44 6.36h-5.51zm12.975 2.43l-.292.377V0h-4.655v23.607h4.655v-9.64c0-2.376 1.195-3.738 3.28-3.738 2.049 0 3.18 1.327 3.18 3.738v9.64h4.655V12.393c0-3.983-2.17-6.36-5.803-6.36-2.533 0-3.96 1.393-5.02 2.756v.001zm21.283-2.626l.348.004c2.414.056 4.254.7 5.47 1.915 1.23 1.23 1.852 3.078 1.852 5.49v10.034h-4.49v-2.164l-.286.316c-1.321 1.464-3.02 2.176-5.191 2.176-2.921 0-5.867-1.612-5.867-5.213v-.066c0-3.459 2.52-5.443 6.917-5.443 1.902 0 3.212.36 4.242.712l.217.075v-.525c0-2.176-1.397-3.376-3.934-3.376-1.855 0-3.165.33-4.75.902l-1.146-3.5c1.855-.804 3.712-1.337 6.618-1.337zm-.066 9.705c-2.292 0-3.608.945-3.608 2.59v.065c0 1.394 1.133 2.295 2.885 2.295 2.394 0 4.067-1.334 4.067-3.246v-.99l-.096-.044c-.936-.432-2.09-.67-3.248-.67zm15.934 7.738V0H126.4v23.607H131.056zm8.589 0V0h-4.655v23.607h4.655z"
-    clipRule="evenodd"
-  ></path>
-  <path
-    fill="#FFFFFF"
-    fillRule="evenodd"
-    d="M25.627 16.668l-3.004-9.57-2.408 7.25 3.249 9.412h4.315L35.835 0H30.73l-5.103 16.668z"
-    clipRule="evenodd"
-  ></path>
-  <path
-    fill="#FFFFFF"
-    fillRule="evenodd"
-    d="M13.22 6.895l-.824 2.799-2.053 6.974L5.244 0H0l8.056 23.76h4.316l2.309-6.841.953-2.82L17.85 7.53 20.394 0h-5.146L13.22 6.895z"
-    clipRule="evenodd"
-  ></path>
-</svg>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          
+        <form onSubmit={handleSubmit} className="space-y-4 mt-10">
           <div>
-            <label htmlFor="umail" className="block text-sm font-semibold mb-2">
-              Email
+            <label htmlFor="umail" className="block text-sm text-white mb-2">
+              {email_label}
             </label>
             <input
               type="email"
@@ -81,14 +78,13 @@ const LoginPage = () => {
               required
               onChange={handleInputChange}
               value={formData.umail}
-              className="w-full px-4 py-2 rounded-sm border focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 text-sm rounded-sm border focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          {/* Password Input */}
-          <div>
-            <label htmlFor="password" className="block text-sm font-semibold mb-2">
-              Password
+          <div className="">
+            <label htmlFor="password" className="block text-sm text-white mb-2">
+              {password_label}
             </label>
             <input
               type="password"
@@ -97,17 +93,44 @@ const LoginPage = () => {
               required
               onChange={handleInputChange}
               value={formData.password}
-              className="w-full px-4 py-2 rounded-sm border focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-sm text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
+          {invalid && (
+            <p className="text-red-500 flex gap-3 text-sm">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                />
+              </svg>
+              {invalid_cred}
+            </p>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white font-bold py-2 rounded-sm shadow hover:bg-blue-600 transition-colors"
+            className="w-full bg-blue-500 text-white py-3 rounded-sm shadow hover:bg-blue-600 transition-colors"
           >
-            Login
+            {login_btn}
           </button>
         </form>
+        <p className="text-white text-center text-sm mt-4">
+          {" "}
+          {no_account}{" "}
+          <Link to="/signin" className="text-blue-400 underline">
+            {signup_btn}
+          </Link>{" "}
+        </p>
       </div>
     </section>
   );

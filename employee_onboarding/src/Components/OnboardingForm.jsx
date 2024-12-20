@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+
+
+
+  
 const OnboardingForm = () => {
-  const [formData, setFormData] = useState({
-    Fullname: "",
-    Email: "",
-    Phonenumber: "",
-    Department: "",
-    Designation: "",
-    Joiningdate: "",
-  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,8 +15,37 @@ const OnboardingForm = () => {
     });
   };
 
+
+  // local
+  const user_data = JSON.parse(localStorage.getItem("User_Detial"))
+  console.log(user_data);
+
+
+  
+    const [formData, setFormData] = useState({
+      Fullname: user_data.uname ,
+      Email: user_data.umail,
+      Phonenumber: "",
+      Department: "",
+      Designation: "",
+      Joiningdate: "",
+      SigininId: "",
+    });
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { Fullname, Email, Phonenumber, Department, Designation, Joiningdate } = formData;
+  if (!Fullname || !Email || !Phonenumber || !Department || !Designation || !Joiningdate) {
+    alert("Please fill in all required fields before submitting.");
+    return; // Prevent further execution if validation fails
+  }
+    const ud = JSON.parse(localStorage.getItem("User_Detial")); // Use JSON.parse
+setFormData((prevState) => ({
+  ...prevState,
+  SigininId: ud._id, 
+}));
+console.log(formData.SigininId);
 
     try {
       const response = await axios.post("http://localhost:3010/users/new_onbord", formData);
@@ -44,7 +69,8 @@ const OnboardingForm = () => {
             placeholder="Full Name"
             name="Fullname"
             required
-            value={formData.Fullname}
+            value={user_data.uname}
+            disabled
             onChange={handleInputChange}
             className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />
@@ -55,7 +81,8 @@ const OnboardingForm = () => {
             placeholder="Email"
             name="Email"
             required
-            value={formData.Email}
+            value={user_data.umail}
+            disabled
             onChange={handleInputChange}
             className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-yellow-500"
           />

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
   return (
-    <aside className="h-screen w-[25%] bg-[#181C14] shadow-md px-4 py-6 flex flex-col justify-between relative">
+    <aside className="h-screen  w-[25%] bg-[#181C14] z-10 shadow-md px-4 py-6 flex flex-col justify-between absolute">
   
       <div className="flex  flex-col items-center mb-6">
       <svg

@@ -6,7 +6,7 @@ const router = require('./routes/User');
 const vulRoute = require('./vuLS/vulne');
 const dbconnection = require('./general/Connection');
 const bodyParser = require('body-parser');
-
+const path = require('path')
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -16,6 +16,9 @@ app.get('/check', (req, res) => {
 
 app.use('/users', router);
 app.use('/vul', vulRoute);
+
+app.use('/uploads', express.static(path.join(__dirname, 'routes/uploads')));
+
 dbconnection();
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

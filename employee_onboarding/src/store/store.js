@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import exampleReducer from './exampleSlice';
-
+import UserReducer from "../slices/UserSlice"
+import DataReducer from "../slices/DataSlice"
 const store = configureStore({
   reducer: {
-    example: exampleReducer, // This 'example' key should match the one used in useSelector
+    UserData: UserReducer,
+    data: DataReducer
   },
 });
 

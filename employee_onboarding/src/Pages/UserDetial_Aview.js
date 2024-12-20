@@ -1,5 +1,5 @@
 import React from "react";
-import ProgressIndicator from "../Components/ProgressIndicator";
+import ProgressIndicator from "../components/ProgressIndicator";
 
 const steps = [
   { status: "created" },
@@ -11,11 +11,10 @@ const steps = [
 ];
 
 const UserDetial_Aview = () => {
-  const transfer = { status: "pending" }; // Example status
+  const transfer = { status: "cancelled" }; 
 
   return (
     <div>
-      <h1>Progress Bar Example</h1>
       <ProgressIndicator steps={steps} currentStatus={transfer.status} />
     </div>
   );
