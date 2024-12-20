@@ -328,7 +328,7 @@ rot.put("/update", async (req, res) => {
             return res.status(404).json({ message: "No document found with the given ID" });
         }
 
-        res.status(200).json({ message: "Document updated successfully", updatedOnbd });
+        res.status(200).json({ message: "document updated successfully", updatedOnbd });
     } catch (error) {
         console.error("Error updating document:", error);
         res.status(500).json({ message: "Internal server error" });
